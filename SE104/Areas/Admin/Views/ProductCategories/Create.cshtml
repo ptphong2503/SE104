@@ -1,0 +1,201 @@
+﻿@model SE104.Models.TbProductCategory
+
+@{
+    ViewData["Title"] = "Tạo danh mục mới";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-action="Index">Danh sách danh mục</a>
+            <span class="breadcrumb-item active">Tạo danh mục mới</span>
+        </nav>
+    </div>
+</div>
+<form asp-action="Create" asp-area="Admin" asp-controller="ProductCategories" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+    <div class="page-header no-gutters has-tab">
+        <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+            <div class="media align-items-center m-b-15"></div>
+
+            <div class="m-b-15">
+                <button type="submit" class="btn btn-primary">
+                    <i class="anticon anticon-save"></i>
+                    <span>Lưu</span>
+                </button>
+                <a class="btn btn-primary btn-tone m-r-5" asp-action="Index">Quay về</a>
+            </div>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Thông tin Page</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#product-edit-description">Mô tả</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="product-edit-basic">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="productName">Tên Danh Mục</label>
+                        <input type="text" class="form-control" placeholder="Tên Danh Mục" asp-for="CatName" required>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="font-weight-semibold">Ordering</label>
+                        <input type="text" class="form-control" asp-for="Ordering">
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Danh Mục Gốc</label>
+                            <select class="form-control" type="text" asp-for="RootId" asp-items="ViewBag.DanhMucGoc">
+                                <option value="0" selected>Danh Mục Gốc</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Danh Mục Cha</label>
+                            <select type="text" class="form-control" asp-for="ParentId">
+                                <option value="0" selected>Danh mục Cha</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="font-weight-semibold">Ảnh đại diện</label>
+                        <br />
+                        @*<img src="/images/categories/@Model.Image" height="300" />*@
+                        @*<label>@Model.Image</label>*@
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <input type="text" asp-for="Image" id="Image" class="form-control" placeholder="Ảnh">
+                            <span class="input-group-text btn btn-success" id="openElfinderBrowser">Browser</span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group d-flex align-items-center col-4">
+                            <div class="switch m-r-10">
+                                <input type="checkbox" asp-for="Published">
+                                <label for="Published"></label>
+                            </div>
+                            <label>Publish</label>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="product-edit-description">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group mg-b-10-force">
+                        <label class="form-control-label">Nội dung: <span class="tx-danger">*</span></label>
+                        <textarea type="text" id="txtDesc" name="Description" asp-for="Description"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts
+    {
+    <script>
+
+        document.getElementById("openElfinderBrowser").addEventListener("click", function () {
+            elfinderDialog2();
+        });
+        $("#RootId").change(function () {
+            var danhMucGocId = $(this).val(); // Lấy giá trị của dropdown danh mục gốc
+
+            $.ajax({
+                url: '@Url.Action("GetDanhMucCha", "ProductCategories")',
+                type: 'GET',
+                data: { danhMucGocId: danhMucGocId }, // Truyền giá trị danh mục gốc lên hàm GetDanhMucCha
+                success: function (danhMucChaList) {
+                    // Xóa các phần tử hiện có trong dropdown danh mục cha
+
+                    $("#ParentId").empty();
+
+                    // Thêm phần tử mặc định cho dropdown danh mục cha
+                    $("#ParentId").append('<option value="0"  selected>Danh mục Cha</option>');
+
+                    // Thêm các phần tử danh mục cha từ danh sách trả về
+                    $.each(danhMucChaList, function (index, danhMucCha) {
+                        var option = '<option value="' + danhMucCha.catId + '">' + danhMucCha.catName + '</option>';
+                        $("#ParentId").append(option);
+                    });
+
+                    // Cập nhật lại giao diện cho dropdown
+                    $('select').niceSelect('update');
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.log(error);
+                }
+            });
+        });
+
+
+
+        function elfinderDialog2(editor) {
+            var fm = $('<div/>').dialogelfinder({
+                baseUrl: "/elfinder/",
+                url: "@Url.Action("Connector", "FileManager", new { area = "Admin" })",
+                lang: 'vi',
+                width: 840,
+                height: 450,
+                destroyOnClose: true,
+                getFileCallback: function (files, fm) {
+                    console.log(files);
+                    var imageUrl = files.path;
+                    var imageInput = document.getElementById("Image");
+
+                    // Kiểm tra xem trường Image có giá trị ban đầu từ cơ sở dữ liệu hay không
+                    var initialValue = imageInput.getAttribute("data-initial-value");
+                    if (imageInput !== '') {
+                        // Nếu có giá trị ban đầu, xóa giá trị địa chỉ URL hiện tại
+                        imageInput.value = '';
+                    }
+
+                    relativeUrl = '/' + imageUrl;
+
+                    document.getElementById("Image").value = relativeUrl;
+                },
+                commandsOptions: {
+                    getfile: {
+                        oncomplete: 'close',
+                        folders: false
+                    }
+                }
+            }).dialogelfinder('instance');
+
+        }
+    </script>
+}
+
+
+

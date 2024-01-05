@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - WebApplication1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/theme.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="~/lib/jquery/dist/jquery.min.js" />
+    <link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.js" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="~/elfinder/css/elfinder.full.min.css" rel="stylesheet" />
+    <link href="~/elfinder/css/elfinder.full.css" rel="stylesheet" />
+    <link href="~/elfinder/css/theme.min.css" rel="stylesheet" />
+    <link href="~/elfinder/css/theme.css" rel="stylesheet" />
+
+    <script src="~/elfinder/js/elfinder.full.min.js"></script>
+    <script src="~/elfinder/js/elfinder.full.js"></script>
+    <script src="~/elfinder/js/elfinder.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.js"></script>
+</head>
+<body class="h-100">
+
+    <div class="container h-100">
+        <main role="main" class="pb-3 h-100">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - WebApplication1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+
+    @*    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

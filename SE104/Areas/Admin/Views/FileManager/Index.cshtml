@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Admin Index";
+    Layout = "~/Areas/Admin/Views/Shared/_FileManagerLayout.cshtml";
+}
+<div id="elfinder" class="h-100"></div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var myCommands = elFinder.prototype._options.commands;
+
+        // Not yet implemented commands in elFinder.NetCore
+        var disabled = ['callback', 'chmod', 'editor', 'netmount', 'ping', 'search', 'zipdl', 'help'];
+        elFinder.prototype.i18.en.messages.TextArea = "Edit";
+        $.each(disabled, function (i, cmd) {
+            (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
+        });
+        var options = {
+            baseUrl: "/elfinder/",
+            url: "@Url.Action("Connector", "FileManager", new { area = "Admin" })",
+
+            rememberLastDir: false,
+            commands: myCommands,
+            height: "100%",
+            lang: 'vi',
+            handlers: {
+                select: (event, elfinderInstance) => {
+                    if (event.data.selected.length == 1) {
+                        var item = $('#' + event.data.selected[0]);
+                        if (!item.hasClass('directory')) {
+                            selectedFile = event.data.selected[0];
+                            $('#elfinder-selectFile').show();
+                            return;
+                        }
+                    }
+                    $('#elfinder-selectFile').hide();
+                    selectedFile = null;
+                }
+            },
+           
+            uiOptions: {
+                toolbar: [
+                    ['back', 'forward'],
+                    ['reload'],
+                    ['home', 'up'],
+                    ['mkdir', 'mkfile', 'upload'],
+                    ['open', 'download', 'getfile'],
+                    ['undo', 'redo'],
+                    ['info'],
+                    ['quicklook'],
+                    ['copy', 'cut', 'paste'],
+                    ['rm'],
+                    ['duplicate', 'rename', 'edit'],
+                    ['selectall', 'selectnone', 'selectinvert'],
+                    ['view', 'sort']
+                ]
+            },
+            //onlyMimes: ["image", "text/plain"] // Get files of requested mime types only
+            lang: 'vi',
+        };
+        $('#elfinder').elfinder(options).elfinder('instance');
+        function getUrlParam(paramName) {
+            var reParam = new RegExp('(?:[\?&]|&)' + paramName + '=([^&]+)', 'i');
+            var match = window.location.search.match(reParam);
+            return (match && match.length > 1) ? match[1] : null;
+    }
+    });
+</script>

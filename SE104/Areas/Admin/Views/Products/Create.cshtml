@@ -1,0 +1,289 @@
+﻿@model SE104.Models.TbProduct
+
+@{
+    var summernote = new SE104.ModelsView.Summernote("#Description");
+    var Size = ViewBag.Size;
+    var Color = ViewBag.Color;
+    ViewData["Title"] = "Tạo sản phẩm mới";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="https://cdn.tiny.cloud/1/z1y5z6sgyrl6nu9zj9f510br8odv8lkkar971v325vzxtarm/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-action="Index">Danh sách sản phẩm</a>
+            <span class="breadcrumb-item active">Tạo sản phẩm mới</span>
+        </nav>
+    </div>
+</div>
+<form asp-action="Create" asp-area="Admin" asp-controller="Products" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="page-header no-gutters has-tab">
+        <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+            <div class="media align-items-center m-b-15"></div>
+
+            <div class="m-b-15">
+                <button type="submit" class="btn btn-primary">
+                    <i class="anticon anticon-save"></i>
+                    <span>Save</span>
+                </button>
+                <a class="btn btn-primary btn-tone m-r-5" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Thông tin chung</a>
+            </li>
+           
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#product-edit-description">Hình ảnh</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="product-edit-basic">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="productName">Tên sản phẩm</label>
+                        <input type="text" class="form-control" placeholder="Tên sản phẩm" asp-for="ProductName" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Giá</label>
+                            <input type="text" class="form-control" placeholder="Giá" asp-for="Price">
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Giá giảm (%)</label>
+                            <input type="text" class="form-control" placeholder="Giá giảm (%)" asp-for="Discount">
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Danh mục sản phẩm</label>
+
+                            <select class="custom-select" asp-for="CatId" style="min-width: 200px;" asp-items="ViewBag.DanhMuc" required>
+                                <option value="" selected>Chọn Danh mục</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Số hàng còn</label>
+                            <input type="text" class="form-control" placeholder="Số hàng còn" asp-for="UnitsInStock" required>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="font-weight-semibold">Size: </label>
+
+                        @if (Size != null)
+                        {
+                            foreach (var item in Size)
+                            {
+                                <div class="form-group d-flex align-items-center col-4">
+                                    <div class="switch m-r-10">
+                                        <input type="checkbox" name="Size" id="@item.SizeValue" value="@item.SizeId">
+                                        <label for="@item.SizeValue"></label>
+                                    </div>
+                                    <label>@item.SizeValue</label>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    <div class="row">
+                        <label class="font-weight-semibold">Màu: </label>
+
+                        @if (Color != null)
+                        {
+                            foreach (var item in Color)
+                            {
+                                <div class="form-group d-flex align-items-center col-4">
+                                    <div class="switch m-r-10">
+                                        <input type="checkbox" name="Color" id="@item.ColorName" value="@item.ColorId">
+                                        <label for="@item.ColorName"></label>
+                                    </div>
+                                    <label>@item.ColorName</label>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="form-group mg-b-10-force">
+                        <label class="form-control-label">Mô tả: <span class="tx-danger">*</span></label>
+                        <textarea asp-for="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">Ảnh đại diện</label>
+                        <div class="input-group mb-3">
+                            <input type="text" asp-for="Image" id="Image" class="form-control" placeholder="Ảnh">
+                            <span class="input-group-text btn btn-success" id="openElfinderBrowser">Browser</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group d-flex align-items-center col-4">
+                            <div class="switch m-r-10">
+                                <input type="checkbox" asp-for="Active">
+                                <label for="Active"></label>
+                            </div>
+                            <label>Active</label>
+                        </div>
+
+                        <div class="form-group d-flex align-items-center col-4">
+                            <div class="switch m-r-10">
+                                <input type="checkbox" asp-for="IsNew">
+                                <label for="IsNew"></label>
+                            </div>
+                            <label>HomeFlag</label>
+                        </div>
+
+                        <div class="form-group d-flex align-items-center col-4">
+                            <div class="switch m-r-10">
+                                <input type="checkbox" asp-for="BestSellers">
+                                <label for="BestSellers"></label>
+                            </div>
+                            <label>BestSellers</label>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-pane fade" id="product-edit-description">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input type="button" class="btn btn-primary" id="openElfinder" value="Tải ảnh" />
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table table-hover" id="tbAnhSanPham">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Ảnh</th>
+                                        <th class="text-center">Ảnh đại diện</th>
+                                        <th class="text-center">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbHtml">
+                                </tbody>
+                            </table>
+                            <input type="hidden" id="tCurrentId" value="0" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+<partial name="_Summernote" model="summernote"></partial>
+
+
+@section Scripts
+    {
+    <script>
+
+        document.getElementById("openElfinderBrowser").addEventListener("click", function () {
+            // Gọi hàm elfinderDialog
+            elfinderDialog2();
+        });
+        document.getElementById("openElfinder").addEventListener("click", function () {
+            // Gọi hàm elfinderDialog
+            elfinderDialog2();
+        });
+        function elfinderDialog2(editor) {
+            var fm = $('<div/>').dialogelfinder({
+                baseUrl: "/elfinder/",
+                url: "@Url.Action("Connector", "FileManager", new { area = "Admin" })",
+                lang: 'vi',
+                width: 840,
+                height: 450,
+                destroyOnClose: true,
+                getFileCallback: function (files, fm) {
+                    console.log(files);
+                    var imageUrl = files.url;
+                    var imageInput = document.getElementById("Image");
+
+                    // Kiểm tra xem trường Image có giá trị ban đầu từ cơ sở dữ liệu hay không
+                    var initialValue = imageInput.getAttribute("data-initial-value");
+                    if (initialValue) {
+                        // Nếu có giá trị ban đầu, xóa giá trị địa chỉ URL hiện tại
+                        imageInput.value = '';
+                    }
+                    var currentUrl = window.location.href; // Lấy URL hiện tại của trang
+                    var baseUrl = currentUrl.split('/')[2]; // Lấy phần hostname từ URL
+                    var relativeUrl = imageUrl.replace(baseUrl, "");
+                    relativeUrl = relativeUrl.replace("https://", "");
+                    addImageProduct(relativeUrl);
+                    document.getElementById("Image").value = relativeUrl;
+                },
+                commandsOptions: {
+                    getfile: {
+                        oncomplete: 'close',
+                        folders: false
+                    }
+                }
+            }).dialogelfinder('instance');
+
+        }
+        $(document).ready(function () {
+
+            $('body').on('click', '.btnXoaAnh', function () {
+                var conf = confirm('Bạn có muốn xóa ảnh này không?');
+                if (conf === true) {
+                    var _id = $(this).data('id');
+                    $('#trow_' + _id).fadeTo('fast', 0.5, function () {
+                        $(this).slideUp('fast', function () { $(this).remove(); });
+                    });
+                    var temp = $('#tCurrentId').val();
+                    var currentId = parseInt(temp) - 1;
+                    $('#tCurrentId').val(currentId);
+                }
+            });
+        });
+        function addImageProduct(url) {
+            var temp = $('#tCurrentId').val();
+            var currentId = parseInt(temp) + 1;
+            var str = "";
+            if (currentId == 1) {
+                str += `<tr id="trow_${currentId}">
+                                            <td class="text-center">${currentId}</td>
+                                            <td class="text-center"><img width="80" src="${url}" /> <input type='hidden' value="${url}" name="Images"/></td>
+                                            <td class="text-center"><input type="radio" name="rDefault" value="${currentId}" checked="checked"/></td>
+                                            <td class="text-center"><a href="#" data-id="${currentId}" class="btn btn-sm btn-danger btnXoaAnh">Xóa</a></td>
+                                            </tr>`;
+            }
+            else {
+                str += `<tr id="trow_${currentId}">
+                                            <td class="text-center">${currentId}</td>
+                                            <td class="text-center"><img width="80" src="${url}" /> <input type='hidden' value="${url}" name="Images"/></td>
+                                            <td class="text-center"><input type="radio" name="rDefault" value="${currentId}"/></td>
+                                            <td class="text-center"><a href="#" data-id="${currentId}" class="btn btn-sm btn-danger btnXoaAnh">Xóa</a></td>
+                                            </tr>`;
+            }
+            $('#tbHtml').append(str);
+            $('#tCurrentId').val(currentId);
+
+        }
+
+    </script>
+
+}
+
+
+

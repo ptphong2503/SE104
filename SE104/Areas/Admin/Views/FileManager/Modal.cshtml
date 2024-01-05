@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Elfinder Dialog</title>
+    <link rel="stylesheet" type="text/css" href="elfinder/css/elfinder.min.css">
+    <link rel="stylesheet" type="text/css" href="elfinder/css/theme.css">
+</head>
+<body>
+    <div id="elfinder"></div>
+
+    <script src="elfinder/js/jquery.min.js"></script>
+    <script src="elfinder/js/elfinder.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var options = {
+                // Cấu hình elfinder
+                baseUrl: "/elfinder/",
+                url: "@Url.Action("Connector", "FileManager", new { area = "Admin" })",
+                lang: 'vi',
+                width: 800,
+                height: 400,
+                destroyOnClose: true,
+                getFileCallback: function (files, fm) {
+                    console.log(files);
+                    var imageUrl = files.url;
+                    var imageInput = window.opener.document.getElementById("Image");
+
+                    // Kiểm tra xem trường Image có giá trị ban đầu từ cơ sở dữ liệu hay không
+                    var initialValue = imageInput.getAttribute("data-initial-value");
+                    if (initialValue) {
+                        // Nếu có giá trị ban đầu, xóa giá trị địa chỉ URL hiện tại
+                        imageInput.value = '';
+                    }
+                    var currentUrl = window.location.href; // Lấy URL hiện tại của trang
+                    var baseUrl = currentUrl.split('/')[2]; // Lấy phần hostname từ URL
+                    var relativeUrl = imageUrl.replace(baseUrl, "");
+                    relativeUrl = relativeUrl.replace("https://", "");
+                    imageInput.value = relativeUrl;
+
+                    window.close(); // Đóng cửa sổ dialog sau khi chọn file thành công
+                },
+                commandsOptions: {
+                    getfile: {
+                        oncomplete: 'close',
+                        folders: false
+                    }
+                }
+            };
+
+            $('#elfinder').elfinder(options).elfinder('instance');
+        });
+    </script>
+</body>
+</html>

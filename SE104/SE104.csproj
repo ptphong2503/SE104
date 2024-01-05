@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Uploads\.tmb\banner\ao-thun-nam-10s23tss003c_black_1__1_1_259EF91C6B7E81D342D402E4D36EEAF0.jpg" />
+    <Content Include="Uploads\.tmb\banner\Banneraothun_8417BD64E3D21328E96C9EC894FEA85A.jpg" />
+    <Content Include="Uploads\.tmb\Blogs\ao-thun-nam-form-rong-mat-me_DDB145476E7C2E7A7E367432EFF2B5F2.jpg" />
+    <Content Include="Uploads\.tmb\default_83945E692CDADF49C7CA9CA8F0E912E7.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Hoodies\Hoodie_ADFC71F0C8674E28DA312387414DD463.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Polo_3406A33F3F483CDD5B3A7ACCF1D7D536.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\PUMA - Áo polo nam ngắn tay Essentials_xam1_982246B7442EDCDF5453A033FDE31BDA.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\PUMA - Áo polo nam ngắn tay Essentials_xam2_CF0252AB5057FA4869118E28A520B939.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Bo Raglan Phối Màu Form Fitted_trang1_A0AC2AB9C91561C820B70B9D7D6761F1.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Bo Raglan Phối Màu Form Fitted_trang2_EA1990523B9CF20237674007D21A9F57.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Bo Raglan Phối Màu Form Fitted_vangbe2_C8037BA342352D60069E2A62762C8264.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Bo Raglan Phối Màu Form Fitted_vangbe_FC2C171444443DFF8ADD182ADEB86341.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Bo Raglan Phối Màu Form Fitted_xanhnavy1_6A14E50507A99D2345FB891647317412.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Bo Raglan Phối Màu Form Fitted_xanhnavy2_63940B4EC36AC3840D9AD0ED771BE5A3.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Ngắn Họa Tiết In Form Regular_den1_30C3058ECC197A0086E28BA56FBB6D40.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Ngắn Họa Tiết In Form Regular_den2_DB09795090854E5EED1D6843AA001BAF.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Ngắn Họa Tiết In Form Regular_den3_E4EEA245EF3BF1A27650DCEB40C2070B.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Ngắn Họa Tiết In Form Regular_trang1_9C120A33A3CFFADCEE75339AB998EA6F.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Ngắn Họa Tiết In Form Regular_trang2_1580B5C58BA147B9DF0383D41B91D23C.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Polo shirts\Áo Polo Nam Tay Ngắn Họa Tiết In Form Regular_trang3_46D451FBDBEE0C09098C04C2E3A1D980.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\Shirts\Shirt_3AF221FBAF9BAB1ECB053BC03EF6C268.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\T-Shirt\T-Shirt_021E34D24C3859BEF4930866B028806D.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\T-Shirt\TED BAKER - Áo thun nam phom suông ngắn tay Turvill_2_34789DEDAA1E54F7FB926D136D4B247E.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\T-Shirt\TED BAKER - Áo thun nam phom suông ngắn tay Turvill_3_247CF47C8A664BC287B7C7FB57804317.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\T-Shirt\Thun_tron_den_3_2CC9619B507C74FDB78E48E749D48867.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\T-Shirt\Thun_tron_den_4_0F709D9FDB5D041FBF9D8DDAB228BE85.jpg" />
+    <Content Include="Uploads\.tmb\Mens\Shirt\T-Shirt\Thun_tron_den_5_2C92FA16E7FA4A7E38B2FFAC3C136287.jpg" />
+    <Content Include="Uploads\.tmb\Shirt\uc-ga-phi-le_C5CD6DE80DD57475C6CBFB4F5CAA8559.jpg" />
+    <Content Include="Uploads\.tmb\Women\Shirts\Hoodie_AA4C3D85DE3AD8EF0E349ADB9DCEE443.jpg" />
+    <Content Include="Uploads\.tmb\Women\Shirts\Polo shirts\Polo_BD07448FDF0AA39C71E6D6009092AED9.jpg" />
+    <Content Include="Uploads\.tmb\Women\Shirts\Shirts\shirt_5DB18FECC337B86FD94DB53FF075BD00.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
+    <PackageReference Include="elFinder.NetCore" Version="1.3.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>

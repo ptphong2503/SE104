@@ -1,0 +1,159 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<SE104.Models.TbProduct>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+
+
+<div class="page-header">
+
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <span class="breadcrumb-item active">Danh sách sản phẩm</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row m-b-30">
+            <form class="col-md-8" asp-action="Index" asp-controller="Products" asp-area="Admin" method="get" style="display:flex">
+                <div class="col-md-4">
+                    <div class="input-affix m-v-10">
+                        <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class=" m-v-10">
+                        <select class="custom-select" name="CatID" onchange="this.form.submit()" asp-items="ViewBag.DanhMuc">
+                            <option value="" selected>Tất cả</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <div class="col-lg-4 text-right">
+                <a class="btn btn-primary" asp-area="Admin" asp-action="Create" asp-controller="Products" style="margin-top: 10.16px">
+                    <i class="anticon anticon-plus-circle m-r-5"></i>
+                    <span>Thêm</span>
+                </a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="records_table">
+                    @if (Model != null)
+                    {
+                        var i = 1;
+                        foreach (var item in Model)
+                        {
+
+                            var currentPrice = 0;
+                            if (item.Price.HasValue && item.Discount.HasValue)
+                            {
+                                currentPrice = item.Price.Value - (item.Price.Value * item.Discount.Value / 100);
+                            }
+                            else
+                            {
+                                currentPrice = item.Price.Value;
+                            }
+
+                            <tr id="trow_@item.ProductId">
+                                <td>@i</td>
+
+                                <td>
+                                    <div id="productContainer">
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar avatar-image avatar-sm m-r-10 ">
+                                                @*<img src="@Url.Content(item.Image)" alt="">*@
+                                                <img class="imgproduct" data-id="@item.ProductId" src="@item.Image" />
+
+                                            </div>
+                                            <h6 class="m-b-0">@item.ProductName</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@currentPrice.ToString("#,##0")&#8363</td>
+
+                                <td>
+                                    @if (item.Active)
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-success badge-dot m-r-10"></div>
+                                            <div>Public</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-danger badge-dot m-r-10"></div>
+                                            <div>Non-Public</div>
+                                        </div>
+                                    }
+                                </td>
+
+
+                                <td>
+                                    <div class="text-right" style="display: flex; justify-content: flex-end;">
+
+                                        <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="Products" asp-action="Edit" asp-route-id="@item.ProductId">Sửa</a>
+                                        <a class="btn btn-info m-r-5" asp-area="Admin" asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">Xem</a>
+
+                                        <form asp-area="Admin" asp-controller="Products" asp-action="Delete" asp-route-id="@item.ProductId" style="margin:  0 5 0 0; ">
+                                            <input class="btn btn-danger m-r-5" type="submit" value="Xóa" onclick="return confirmDelete();" />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            i++;
+
+                        }
+                    }
+                </tbody>
+            </table>
+            <div aria-label="Page navigation example">
+                <ul class="pagination">
+                    <pager class="pager-container" onscroll="no" style="overflow: hidden" list="@Model" asp-area="Admin" asp-route-CatID="@ViewBag.CurrentCatID" asp-controller="Products" asp-action="Index" asp-route-query="@Model" />
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+
+        function confirmDelete() {
+            if (confirm("Bạn có muốn xóa bản ghi này không?")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function updateCatID(selectElement) {
+            var catIDInput = document.getElementById("CatID");
+            catIDInput.value = selectElement.value;
+            selectElement.form.submit();
+        }
+    </script>
+
+}

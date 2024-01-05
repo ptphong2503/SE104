@@ -1,0 +1,186 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<SE104.Models.TbProductCategory>
+
+@{
+    ViewData["Title"] = "Danh sách danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+
+
+<div class="page-header">
+
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <span class="breadcrumb-item active">Danh sách danh mục</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row m-b-30">
+            <div class="col-md-4">
+                <div class="input-affix m-v-10">
+                    <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                    <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-lg-4 text-right">
+                <a class="btn btn-primary" asp-area="Admin" asp-action="Create" asp-controller="ProductCategories">
+                    <i class="anticon anticon-plus-circle m-r-5"></i>
+                    <span>Thêm</span>
+                </a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+
+                        <th>STT</th>
+                        <th>Tên Danh mục</th>
+                        <th>Levels</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="records_table">
+                    @if (Model != null)
+                    {
+                        var i = 1;
+                        foreach (var item in Model)
+                        {
+
+                            <tr id="trow_@item.CatId">
+                                <td>@i</td>
+
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-image avatar-sm m-r-10">
+                                            <img src="@Url.Content(item.Image)" alt="">
+                                        </div>
+                                        <h6 class="m-b-0">@item.CatName</h6>
+                                    </div>
+                                </td>
+                                <td>@item.Levels</td>
+
+                                <td>
+                                    @if (item.Published)
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-success badge-dot m-r-10"></div>
+                                            <div>Public</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-danger badge-dot m-r-10"></div>
+                                            <div>Non-Public</div>
+                                        </div>
+                                    }
+                                </td>
+
+
+                                <td class="text-right">
+                                    <div class="text-right" style="display: flex; justify-content: flex-end;">
+                                        <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="ProductCategories" asp-action="Edit" asp-route-id="@item.CatId">Sửa</a>
+                                        <a class="btn btn-info m-r-5" asp-area="Admin" asp-controller="ProductCategories" asp-action="Details" asp-route-id="@item.CatId">Xem</a>
+                                        <form asp-area="Admin" asp-controller="ProductCategories" asp-action="Delete" asp-route-id="@item.CatId" style="margin:  0 5 0 0; ">
+                                            <input class="btn btn-danger m-r-5" type="submit" value="Xóa" onclick="return confirmDelete();" />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            i++;
+
+                        }
+                    }
+                </tbody>
+            </table>
+            <div aria-label="Page navigation example">
+                <div style="text-align:center">
+                    <ul class="pagination justify-content-center">
+                        <pager class="pager-container" list="@Model" onscroll="no" style="overflow: hidden" asp-controller="ProductsCategories" asp-action="Index" asp-route-query="@Model" />
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            jQuery("#txtCatID").change(function () {
+                var catID = jQuery(this).children(":selected").attr("value");
+                catID = parseFloat(catID);
+                $('#txtCatID option')
+                    .removeAttr('selected');
+                $("txtCatID > [value=" + catID + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/AdminProducts/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CatID: catID
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.rediretUrl;
+                        }
+                    },
+                    Error: function (xhr) {
+                        alert('error');
+                    }
+                });
+
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            jQuery("#txtCatID").change(function () {
+                var catID = jQuery(this).children(":selected").attr("value");
+                catID = parseFloat(catID);
+                $('#txtCatID option')
+                    .removeAttr('selected');
+                $("#txtCatID > [value=" + catID + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/AdminProducts/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CatID: catID
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+
+
+        });
+        function confirmDelete() {
+            if (confirm("Bạn có muốn xóa bản ghi này không?")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+}

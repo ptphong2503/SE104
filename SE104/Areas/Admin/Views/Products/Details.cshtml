@@ -1,0 +1,246 @@
+﻿@model SE104.Models.TbProduct
+
+@{
+    var currentId = 1;
+    var Size = ViewBag.Size;
+    var Color = ViewBag.Color;
+    var lsSize = ViewBag.lsSize;
+    var lsColor = ViewBag.lsColor;
+    ViewData["Title"] = "Chi tiết " + Model.ProductName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<script src="~/elfinder/js/elfinder.min.js"></script>
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-action="Index">Danh sách sản phẩm</a>
+            <span class="breadcrumb-item active">Chi tiết</span>
+        </nav>
+    </div>
+</div>
+
+<form asp-action="Details" asp-area="Admin" asp-controller="Products" asp-route-id="@Model.ProductId">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="ProductId" />
+
+
+    <div class="page-header no-gutters has-tab">
+        <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+            <div class="media align-items-center m-b-15">
+                <div class="avatar avatar-image rounded" style="height:100px; width: 70px">
+                    <img src="@Model.Image" alt="">
+                </div>
+                <div class="m-l-15">
+                    <h4 class="m-b-0">@Model.ProductName</h4>
+                    <p class="text-muted m-b-0">Code: #@Model.ProductId</p>
+                </div>
+            </div>
+
+            <div class="m-b-15">
+                <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.ProductId">Sửa</a>
+
+                <a class="btn btn-success btn-tone m-r-5" asp-action="Index">Quay về</a>
+            </div>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Thông tin chung</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#product-edit-description">Hình ảnh</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="product-edit-basic">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="productName">Tên sản phẩm</label>
+                        <div> @Model.ProductName</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Giá</label>
+                            <div> @Model.Price.Value.ToString("#,##0")&#8363</div>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Giá giảm (%)</label>
+                            <div>@Model.Discount %</div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Danh mục sản phẩm</label>
+                            <div>@Model.Cat.CatName</div>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold">Số hàng còn</label>
+                            <div>@Model.UnitsInStock</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group d-flex align-items-center col-4">
+                            <div class="switch m-r-10">
+                                <input type="checkbox" asp-for="Active" disabled="">
+                                <label for="Active"></label>
+                            </div>
+                            <label>Active</label>
+                        </div>
+
+                        <div class="form-group d-flex align-items-center col-4">
+                            <div class="switch m-r-10">
+                                <input type="checkbox" asp-for="IsNew" disabled="">
+                                <label for="IsNew"></label>
+                            </div>
+                            <label>HomeFlag</label>
+                        </div>
+
+                        <div class="form-group d-flex align-items-center col-4">
+                            <div class="switch m-r-10">
+                                <input type="checkbox" asp-for="BestSellers" disabled="">
+                                <label for="BestSellers"></label>
+                            </div>
+                            <label>BestSellers</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="font-weight-semibold">Size: </label>
+
+                        @if (Size != null)
+                        {
+                            foreach (var item in Size)
+                            {
+                                if (lsSize.Contains(item.SizeId))
+                                {
+                                    <div class="form-group d-flex align-items-center col-4">
+                                        <div class="switch m-r-10">
+                                            <input type="checkbox" name="Size" id="@item.SizeValue" value="@item.SizeId" checked="" disabled="">
+                                            <label for="@item.SizeValue"></label>
+                                        </div>
+                                        <label>@item.SizeValue</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group d-flex align-items-center col-4">
+                                        <div class="switch m-r-10">
+                                            <input type="checkbox" name="Size" id="@item.SizeValue" value="@item.SizeId" disabled="">
+                                            <label for="@item.SizeValue"></label>
+                                        </div>
+                                        <label>@item.SizeValue</label>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+
+                    <div class="row">
+                        <label class="font-weight-semibold">Màu: </label>
+
+                        @if (Color != null)
+                        {
+                            foreach (var item in Color)
+                            {
+                                if (lsColor.Contains(item.ColorId))
+                                {
+                                    <div class="form-group d-flex align-items-center col-4">
+                                        <div class="switch m-r-10">
+                                            <input type="checkbox" name="Color" id="@item.ColorName" value="@item.ColorId" checked="" disabled="">
+                                            <label for="@item.ColorName"></label>
+                                        </div>
+                                        <label>@item.ColorName</label>
+                                    </div>
+                                }
+                                else
+                                {
+
+                                    <div class="form-group d-flex align-items-center col-4">
+                                        <div class="switch m-r-10">
+                                            <input type="checkbox" name="Color" id="@item.ColorName" value="@item.ColorId" disabled="">
+                                            <label for="@item.ColorName"></label>
+                                        </div>
+                                        <label>@item.ColorName</label>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">Ảnh đại diện:</label>
+                        <div class="input-group mb-3">
+                            <img src="@Model.Image" style="height: 300px">
+                        </div>
+                    </div>
+                    <div class="form-group mg-b-10-force">
+                        <label class="form-control-label">Mô tả ngắn: <span class="tx-danger">*</span></label>
+                        <div>@Html.Raw(Model.ShortDesc)</div>
+                    </div>
+                    <div class="form-group mg-b-10-force">
+                        <label class="form-control-label">Mô tả: <span class="tx-danger">*</span></label>
+                        <div>@Html.Raw(Model.Description)</div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-pane fade" id="product-edit-description">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover" id="tbAnhSanPham">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Ảnh</th>
+                                        <th class="text-center">Ảnh đại diện</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbHtml">
+                                    @foreach (var product in Model.ProductImage)
+                                    {
+
+                                        <tr id="trow_@currentId" name="Pick">
+                                            <td class="text-center">@currentId</td>
+                                            <td class="text-center"><img width="80" src="@product.Image" /> <input type='hidden' name="Images" value="@product.Image" /></td>
+                                            @if (product.IsDefault)
+                                            {
+                                                <td class="text-center"><label>Default</label></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-center"><label></label></td>
+                                            }
+                                        </tr>
+                                        currentId++;
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+
+
