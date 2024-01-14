@@ -1,0 +1,71 @@
+﻿@model IEnumerable<SE104.Models.TbProduct>
+
+
+    <!-- SHOP Item -->
+    @if (Model != null)
+    {
+
+        foreach (var item in Model)
+        {
+            if (item.Active)
+            {
+                <div class="col-md-4 col-lg-4 pb-80" >
+                <a href="/San-pham/@item.Alias/@item.ProductId">
+
+                    <div class="post-prev-img">
+                    <img src="@item.Image" alt="img">
+                    </div>
+                    @if (item.Discount > 0)
+                    {
+                        <div class="sale-label-cont">
+                            <span class="sale-label label-danger bg-red">Sale</span>
+                        </div>
+                    }
+                    <div class="post-prev-title mb-5" style="height: 78px!important">
+                    <h3>@item.ProductName</h3>
+                    </div>
+                    @if (item.Discount > 0)
+                    {
+                        <div class="shop-price-cont">
+                            <del>@item.Price.Value.ToString("#,##0")&#8363</del>&nbsp;<strong>@item.SalePrice.Value.ToString("#,##0")&#8363</strong>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="shop-price-cont">
+                            <strong>@item.SalePrice.Value.ToString("#,##0")&#8363</strong>
+                        </div>
+                    }
+                    <div class="lh-19">
+                        <i class="fa fa-star" ></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                        <small><span class="slash-divider"></span> <span class="display-none-767">(21 đánh giá)</span> </small>
+
+                     </div>
+                 </a>
+
+                </div>
+            }
+        }
+    }
+
+
+    <!-- SHOP Item -->
+
+
+
+
+<!-- PAGINATION -->
+@*<div class="row mt-0">
+    <nav class="blog-pag">
+        <div style="text-align:center">
+            <ul class="pagination m-0">
+                <pager class="pager-container" list="@Model" asp-controller="Products" asp-action="Index" asp-route-query="@Model" />
+            </ul>
+        </div>
+    </nav>
+</div>*@

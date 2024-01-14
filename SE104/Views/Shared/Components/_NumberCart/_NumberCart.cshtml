@@ -1,0 +1,15 @@
+﻿@model List<SE104.ModelsView.CartItem>
+
+@if (Model != null && Model.Count() > 0)
+{
+    
+    <div class="cart-number-cont">
+        <span class="number-label label-danger bg-red">@Model.Count()</span>
+    </div>  
+}
+else
+{
+    <div class="cart-number-cont">
+        <span class="number-label label-danger bg-red">0</span>
+    </div>
+}

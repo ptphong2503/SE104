@@ -1,0 +1,296 @@
+﻿@using PagedList.Core.Mvc
+@using Microsoft.AspNetCore.Http
+
+@model PagedList.Core.IPagedList<SE104.Models.TbProduct>
+@{
+    var newModel = new SE104.Models.TbProductCategory();
+
+    var query = Context.Session.GetString("query");
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="page-title-cont page-title-large page-title-img grey-dark-bg pt-250">
+    <div class="relative container align-left">
+        <div class="row">
+
+            <div class="col-md-8">
+                <h1 class="page-title">Tìm kiếm "@query"</h1>
+                
+            </div>
+
+            <div class="col-md-4">
+                <div class="breadcrumbs">
+                    <a href="/">Trang chủ</a><span class="slash-divider">/</span><a>Tìm kiếm</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page-section p-140-cont">
+    <div class="container">
+        <div class="row">
+
+            <!-- CONTENT -->
+
+            <div class="col-sm-8">
+                <div class="clearfix mb-70">
+                    <div class="left font-12">
+                        Kết quả: @Model.Count()  sản phẩm
+                    </div>
+                    <div class="right">
+
+                        <select class="select-md" name="Sort" id="Sort" onchange="this.form.submit()" asp-items="ViewBag.Sort">
+                            <option value="">Sắp xếp</option>
+                            <option value="1">Giá: Thấp đến cao</option>
+                            <option value="2">Giá: Cao đến thấp</option>
+                            <option value="3">Mới ra mắt</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row" id="loadProducts">
+                    @await Html.PartialAsync("SortProduct")
+                </div>
+
+                <div class="row mt-0">
+                    <nav class="blog-pag">
+                        <div style="text-align:center">
+                            <ul class="pagination m-0">
+                                <pager class="pager-container" list="@Model" asp-controller="Products" asp-action="Index" asp-route-query="@Model" />
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+
+
+
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="col-sm-4 col-md-3 col-md-offset-1">
+
+
+                <!-- WIDGET -->
+                <!-- WIDGET -->
+                <div class="widget" style="padding-top: 85px">
+
+                    <h5 class="widget-title">Mục khác</h5>
+
+                    <div class="widget-body">
+                        <ul class="clearlist widget-menu">
+                            @if (ViewBag.categories != null)
+                            {
+                                foreach (var i in ViewBag.categories)
+                                {
+                                    <li>
+                                        <a href="/danhmuc/@i.Alias-@i.CatId">@i.CatName</a>
+                                    </li>
+                                }
+                            }
+
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- WIDGET -->
+                <div class="widget">
+
+                    <h5 class="widget-title">Popular Items</h5>
+
+                    <div class="widget-body">
+                        <ul class="clearlist widget-posts">
+                            @if (ViewBag.popProducts != null)
+                            {
+                                foreach (var i in ViewBag.popProducts)
+                                {
+                                    <li class="clearfix">
+                                        <a href="/San-pham/@i.Alias/@i.ProductId"><img src="@i.Image" alt="" class="widget-posts-img" style="height: 100px;"></a>
+                                        <div class="widget-posts-descr">
+                                            <a href="/San-pham/@i.Alias/@i.ProductId" title="">@i.ProductName</a>
+                                            @if (i.Discount > 0)
+                                            {
+                                                <div class="lh-19">
+                                                    <del>@i.Price.ToString("#,##0")&#8363</del>&nbsp;@i.SalePrice.ToString("#,##0")&#8363
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="lh-19">
+                                                    @i.Price.ToString("#,##0")&#8363
+                                                </div>
+                                            }
+
+                                            <div class="lh-19">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-half-o"></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            }
+
+                        </ul>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- SHOP INFO 1 -->
+<div class="shop-info grey-dark-bg font-white pt-110-b-80-cont">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 text-center"><span class="icon icon-basic-globe"></span><h6 class="white-text ">Free Shipping</h6></div>
+            <div class="col-md-3 col-sm-6 text-center"><span class="icon icon-basic-life-buoy"></span><h6 class="white-text ">24/7 Customer Service</h6></div>
+            <div class="col-md-3 col-sm-6 text-center"><span class="icon icon-ecommerce-creditcard"></span><h6 class="white-text ">Payment Options</h6></div>
+            <div class="col-md-3 col-sm-6 text-center"><span class="icon icon-basic-clockwise"></span><h6 class="white-text ">30 Days Returns</h6></div>
+        </div>
+    </div>
+</div>
+
+<!-- CLIENTS 1  -->
+<div class="page-section p-110-cont">
+    <div class="container">
+        <div class="row client-row border-bot">
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/1.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/2.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/3.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/4.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/9.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/10.png">
+            </div>
+
+        </div>
+
+        <div class="row client-row">
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/5.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/6.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/7.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/8.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item ">
+                <img alt="client" src="images/clients/11.png">
+            </div>
+
+            <div class="col-xs-6 col-sm-2 client1-item">
+                <img alt="client" src="images/clients/12.png">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- NEWS LETTER -->
+<div class="page-section nl-cont">
+    <div class="container">
+        <div class="relative">
+            <div id="mc_embed_signup" class="nl-form-container clearfix">
+                <form action="http://abcgomel.us9.list-manage.com/subscribe/post-json?u=ba37086d08bdc9f56f3592af0&amp;id=e38247f7cc&amp;c=?" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="newsletterform validate" target="_blank" novalidate>
+                    <!-- EDIT THIS ACTION URL (add "post-json?u" instead of "post?u" and appended "&amp;c=?" to the end of this URL) -->
+                    <input type="email" value="" name="EMAIL" class="email nl-email-input" id="mce-EMAIL" placeholder="Enter your email" required>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;"><input type="text" name="b_ba37086d08bdc9f56f3592af0_e38247f7cc" tabindex="-1" value=""></div>
+
+                    <input type="submit" value="SUBSCRIBE" name="subscribe" id="mc-embedded-subscribe" class="button medium gray">
+                </form>
+                <div id="notification_container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script>
+        /*document.getElementById("Sort").addEventListener("change", function () {
+            var selectedValue = this.value;
+            fetch("/Products/SortProduct", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(selectedValue)
+            }).then(function (response) {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error("Error sending data to the controller");
+                }
+            }).then(function (result) {
+                // Replace the content of the loadProducts div with the new data
+                $("#loadProducts").html(result);
+            });
+        });*/
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+
+    <script>
+        document.getElementById("Sort").addEventListener("change", function () {
+            var selectedValue = this.value;
+            var queryValue = $("#query").val(); // Lấy giá trị từ input tìm kiếm
+            console.log(queryValue);
+            $.ajax({
+                url: '@Url.Action("SortProduct", "Products")',
+                type: 'POST',
+                data: { Sort: selectedValue, query: queryValue },
+                success: function (result) {
+                    $("#loadProducts").html(result);
+                },
+                error: function (error) {
+                    console.log("Error fetching partial view: " + error);
+                }
+            });
+        });
+    </script>
+
+
+
+}

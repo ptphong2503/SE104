@@ -1,49 +1,303 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+
+<!DOCTYPE html>
+<!--
+
+    Theme Name: HASWELL
+    Description: HTML/CSS
+    Author: ABCgomel
+    Designed & Coded by ABCgomel
+
+-->
+
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SE104</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SE104.styles.css" asp-append-version="true" />
+    <title>Haswell - Responsive HTML5 Template</title>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Haswell - Responsive HTML5 Template">
+    <meta name="author" content="ABCgomel">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- FAVICONS -->
+    <link rel="shortcut icon" href="~/assets/images/favicon/favicon.png">
+    <link rel="apple-touch-icon" href="~/assets/images/favicon/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/favicon/apple-touch-icon-114x114.png">
+
+    <!-- CSS -->
+    <!-- REVOSLIDER CSS SETTINGS -->
+    <link rel="stylesheet" type="~/assets/text/css" href="~/assets/rs-plugin/css/settings.min.css" media="screen">
+
+    <link href="~/assets/fontawesome-free-6.2.1-web/css/all.css" rel="stylesheet" />
+    <link href="~/assets/fontawesome-free-6.2.1-web/css/all.min.css" rel="stylesheet" />
+    <!--  BOOTSTRAP -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+
+    <!--  GOOGLE FONT -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700%7COpen+Sans:400,300,700' rel='stylesheet' type='~/assets/text/css'>
+
+    <!-- ICONS ELEGANT FONT & FONT AWESOME & LINEA ICONS  -->
+    <link rel="stylesheet" href="~/assets/css/icons-fonts.css">
+
+    <!--  CSS THEME -->
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <!-- ANIMATE -->
+    <link rel='stylesheet' href="~/assets/css/animate.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- IE Warning CSS -->
+    <!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="css/ie-warning.css" ><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="css/ie8-fix.css" ><![endif]-->
+    <!-- Magnific popup  in style.css	Owl Carousel Assets in style.css -->
+    <!-- CSS end -->
+    <!-- JS begin some js files in bottom of file-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Modernizr -->
+    <!-- <script src="js/modernizr.js"></script> -->
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SE104</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <!-- LOADER -->
+    <div id="loader-overflow">
+        <div id="loader3">Please enable JS</div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - SE104 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <div id="wrap" class="boxed ">
+        <div class="grey-bg">
+
+            <!-- HEADER -->
+            <!-- HEADER -->
+            @*            @await Html.PartialAsync("_HeaderPartialView.cshtml")
+            *@
+            @await Component.InvokeAsync("_Header")
+
+
+            <!-- REVO SLIDER FULLSCREEN 1 -->
+            @RenderBody()
+
+
+            <!-- FOOTER 2 -->
+            @await Html.PartialAsync("_FooterPartialView.cshtml")
+
+            <!-- BACK TO TOP -->
+            <p id="back-top">
+                <a href="#top" title="Back to Top"><span class="icon icon-arrows-up"></span></a>
+            </p>
+
+        </div><!-- End BG -->
+    </div><!-- End wrap -->
+    <!-- JS begin -->
+    <!-- jQuery  -->
+    @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/assets/js/jquery-1.11.2.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    <!-- MAGNIFIC POPUP -->
+    <script src='~/assets/js/jquery.magnific-popup.min.js'></script>
+
+    <!-- PORTFOLIO SCRIPTS -->
+    <script src="~/assets/js/isotope.pkgd.min.js"></script>
+    <script src="~/assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/assets/js/masonry.pkgd.min.js"></script>
+
+    <!-- COUNTER -->
+    <script src="~/assets/js/jquery.countTo.js"></script>
+
+    <!-- APPEAR -->
+    <script src="~/assets/js/jquery.appear.js"></script>
+
+    <!-- OWL CAROUSEL -->
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+
+    <!-- MAIN SCRIPT -->
+    <script src="~/assets/js/main.js"></script>
+
+    <!-- REVOSLIDER SCRIPTS  -->
+    <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+    <script src="~/assets/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/assets/rs-plugin/js/jquery.themepunch.revolution-parallax.min.js"></script>
+
+    <!-- SLIDER REVOLUTION INIT  -->
+    <!-- CUSTOME  -->
+    <script src="~/js/site.js"></script>
+    <script src="~/js/shoppingcart.js"></script>
+    <script>
+
+        jQuery(document).ready(function () {
+            if ((navigator.appVersion.indexOf("Win") != -1) && (ieDetect == false)) {
+                jQuery('#rs-fullscr').revolution(
+                    {
+                        dottedOverlay: "none",
+                        delay: 16000,
+                        startwidth: 1170,
+                        startheight: 700,
+                        hideThumbs: 200,
+
+                        thumbWidth: 100,
+                        thumbHeight: 50,
+                        thumbAmount: 5,
+
+                        //fullScreenAlignForce: "off",
+
+                        navigationType: "none",
+                        navigationArrows: "solo",
+                        navigationStyle: "preview4",
+
+                        hideTimerBar: "on",
+
+                        touchenabled: "on",
+                        onHoverStop: "on",
+
+                        swipe_velocity: 0.7,
+                        swipe_min_touches: 1,
+                        swipe_max_touches: 1,
+                        drag_block_vertical: false,
+
+                        parallax: "scroll",
+                        parallaxBgFreeze: "on",
+                        parallaxLevels: [45, 40, 35, 50],
+                        parallaxDisableOnMobile: "on",
+
+                        keyboardNavigation: "off",
+
+                        navigationHAlign: "center",
+                        navigationVAlign: "bottom",
+                        navigationHOffset: 0,
+                        navigationVOffset: 20,
+
+                        soloArrowLeftHalign: "left",
+                        soloArrowLeftValign: "center",
+                        soloArrowLeftHOffset: 20,
+                        soloArrowLeftVOffset: 0,
+
+                        soloArrowRightHalign: "right",
+                        soloArrowRightValign: "center",
+                        soloArrowRightHOffset: 20,
+                        soloArrowRightVOffset: 0,
+
+                        shadow: 0,
+                        fullWidth: "off",
+                        fullScreen: "on",
+
+                        spinner: "spinner4",
+
+                        stopLoop: "off",
+                        stopAfterLoops: -1,
+                        stopAtSlide: -1,
+
+                        shuffle: "off",
+
+                        autoHeight: "off",
+                        forceFullWidth: "off",
+
+                        hideThumbsOnMobile: "off",
+                        hideNavDelayOnMobile: 1500,
+                        hideBulletsOnMobile: "off",
+                        hideArrowsOnMobile: "off",
+                        hideThumbsUnderResolution: 0,
+
+                        hideSliderAtLimit: 0,
+                        hideCaptionAtLimit: 0,
+                        hideAllCaptionAtLilmit: 0,
+                        startWithSlide: 0,
+                        //fullScreenOffsetContainer: ""
+                    });
+            } else {
+                jQuery('#rs-fullscr').revolution(
+                    {
+                        dottedOverlay: "none",
+                        delay: 16000,
+                        startwidth: 1170,
+                        startheight: 700,
+                        hideThumbs: 200,
+
+                        thumbWidth: 100,
+                        thumbHeight: 50,
+                        thumbAmount: 5,
+
+                        navigationType: "none",
+                        navigationArrows: "solo",
+                        navigationStyle: "preview4",
+
+                        hideTimerBar: "on",
+
+                        touchenabled: "on",
+                        onHoverStop: "on",
+
+                        swipe_velocity: 0.7,
+                        swipe_min_touches: 1,
+                        swipe_max_touches: 1,
+                        drag_block_vertical: false,
+
+                        parallax: "mouse",
+                        parallaxBgFreeze: "on",
+                        parallaxLevels: [0],
+                        parallaxDisableOnMobile: "on",
+
+                        keyboardNavigation: "off",
+
+                        navigationHAlign: "center",
+                        navigationVAlign: "bottom",
+                        navigationHOffset: 0,
+                        navigationVOffset: 20,
+
+                        soloArrowLeftHalign: "left",
+                        soloArrowLeftValign: "center",
+                        soloArrowLeftHOffset: 20,
+                        soloArrowLeftVOffset: 0,
+
+                        soloArrowRightHalign: "right",
+                        soloArrowRightValign: "center",
+                        soloArrowRightHOffset: 20,
+                        soloArrowRightVOffset: 0,
+
+                        shadow: 0,
+                        fullWidth: "off",
+                        fullScreen: "on",
+
+                        spinner: "spinner4",
+
+                        stopLoop: "off",
+                        stopAfterLoops: -1,
+                        stopAtSlide: -1,
+
+                        shuffle: "off",
+
+                        autoHeight: "off",
+                        forceFullWidth: "off",
+
+                        hideThumbsOnMobile: "off",
+                        hideNavDelayOnMobile: 1500,
+                        hideBulletsOnMobile: "off",
+                        hideArrowsOnMobile: "off",
+                        hideThumbsUnderResolution: 0,
+
+                        hideSliderAtLimit: 0,
+                        hideCaptionAtLimit: 0,
+                        hideAllCaptionAtLilmit: 0,
+                        startWithSlide: 0,
+
+                    });
+            }
+        });	//ready
+
+    </script>
+
+    <!-- JS end -->
+
 </body>
-</html>
+</html>		

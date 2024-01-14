@@ -1,0 +1,88 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<TbProduct>
+
+ 
+
+<div class="row">
+
+    <!-- SHOP Item -->
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            if (item.Active)
+            {
+                string url = $"/{item.Alias}-{item.ProductId}.html";
+                <div class="col-md-4 col-lg-4 pb-80">
+
+                    <div class="post-prev-img">
+                        <a href="@url"><img src="@item.Image" alt="img"></a>
+                    </div>
+                    @if (item.Discount > 0)
+                    {
+                        <div class="sale-label-cont">
+                            <span class="sale-label label-danger bg-red">Sale</span>
+                        </div>
+
+                    }
+                    else
+                    {
+
+                    }
+
+                    <div class="post-prev-title mb-5" style="height: 78px!important">
+                        <h3><a class="font-norm a-inv" href="@url">@item.ProductName</a></h3>
+                    </div>
+                    @if (item.Discount > 0)
+                    {
+                        <div class="shop-price-cont">
+                            <del>@item.Price.Value.ToString("#,##0")</del>&nbsp;<strong>@item.SalePrice.Value.ToString("#,##0") VND</strong>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="shop-price-cont">
+                            <strong>@item.SalePrice.Value.ToString("#,##0") VND</strong>
+                        </div>
+                    }
+                    <div class="post-prev-more-cont clearfix">
+                        <div class="shop-add-btn-cont">
+                            <a class="button medium gray-light shop-add-btn" href="#">THÊM VÀO GIỎ</a>
+                        </div>
+                        <div class="shop-sub-btn-cont">
+                            <a href="#" class="post-prev-count"><span aria-hidden="true" class="icon_heart_alt"></span></a>
+                            <a href="#" class="post-prev-count dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span aria-hidden="true" class="social_share"></span>
+                            </a>
+                            <ul class="social-menu dropdown-menu dropdown-menu-right" role="menu">
+                                <li>
+                                    <a href="#"><span aria-hidden="true" class="social_facebook"></span></a>
+                                </li>
+                                <li><a href="#"><span aria-hidden="true" class="social_twitter"></span></a></li>
+                                <li><a href="#"><span aria-hidden="true" class="social_dribbble"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        }
+    }
+
+    <!-- SHOP Item -->
+
+
+</div>
+
+<!-- PAGINATION -->
+
+<div class="row mt-0">
+    <nav class="blog-pag">
+        <div style="text-align:center">
+            <ul class="pagination m-0">
+                <pager class="pager-container" list="@Model" asp-controller="Products" asp-action="Index" asp-route-query="@Model" />
+            </ul>
+        </div>
+    </nav>
+</div>

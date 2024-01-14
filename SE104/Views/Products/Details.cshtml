@@ -1,0 +1,299 @@
+﻿@model SE104.Models.TbProduct
+
+@{
+
+    ViewData["Title"] = Model.ProductName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+<div class="page-title-cont page-title-small grey-light-bg">
+    <div class="relative container align-left">
+        <div class="row">
+
+
+
+            <div class="">
+                <div class="breadcrumbs">
+                    <a href="/">Trang chủ</a><span class="slash-divider">/</span><a href="/danhmuc/@Model.Cat.Alias-@Model.Cat.CatId">@Model.Cat.CatName</a><span class="slash-divider">/</span><span class="bread-current">@Model.ProductName</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page-section p-140-cont">
+    <div class="container">
+        <div class="row">
+
+
+            <!-- ITEM PHOTO -->
+            <div class="col-md-4 col-sm-12 mb-50">
+                <div class="fullwidth-slider owl-carousel owl-dark-bg owl-pag-2 owl-arrows-bg post-prev-img">
+
+                    <!-- ITEM -->
+                    @foreach (var item in ViewBag.lsImage)
+                    {
+                        if (item.IsDefault)
+                        {
+                            <div class="item m-0 post-prev-img popup-gallery">
+                                <div>
+                                    <a href="@item.Image"><img src="@item.Image" alt="img"></a>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    @foreach (var item in ViewBag.lsImage)
+                    {
+                        if (!item.IsDefault)
+                        {
+                            <div class="item m-0 post-prev-img popup-gallery">
+                                <div>
+                                    <a href="@item.Image"><img src="@item.Image" alt="img"></a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="row">
+                    <div class="owl-3items-nav owl-carousel owl-arrows-bg">
+                        @foreach (var item in ViewBag.lsImage)
+                        {
+
+                            <div class="item m-0 post-prev-img popup-gallery" style="padding-right: 3px;">
+                                <div>
+                                    <a href="@item.Image"><img src="@item.Image" alt="img"></a>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CONTENT -->
+            <div class="col-md-7 col-sm-12 col-md-offset-1 mb-50">
+
+                <h3 class="mt-0 mb-30">@Model.ProductName</h3>
+
+                <hr class="mt-0 mb-30">
+                <div class="row">
+                    @if (Model.Discount > 0)
+                    {
+                        <div class="col-xs-6  mt-0 mb-30">
+                            <del>@Model.Price.Value.ToString("#,##0")&#8363</del>
+                            <strong class="item-price">@Model.SalePrice.Value.ToString("#,##0")&#8363</strong>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="col-xs-6  mt-0 mb-30">
+                            <strong class="item-price">@Model.Price.Value.ToString("#,##0")&#8363</strong>
+                        </div>
+                    }
+
+                    <div class="col-xs-6 text-right">
+                        <span class="font-black">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                        <small><span class="slash-divider">/</span> 21 <span class="display-none-767">reviews</span> </small>
+                    </div>
+
+                </div>
+
+                <hr class="mt-0 mb-30">
+
+                <div class="mb-30">
+                    <label>@Html.Raw(Model.ShortDesc)</label>
+                </div>
+
+                <hr class="mt-0 mb-30">
+
+                <div class="row">
+                    <div class="col-sm-6 mb-30">
+
+                        <form method="post" asp-action="Products" class="form">
+                            <select class="select-md input-border w-100" name="sizeId" id="sizeId" asp-items="ViewBag.lsSize">
+                            </select>
+                        </form>
+                    </div>
+
+                    <div class="col-sm-6 mb-30">
+                        <form method="post" asp-action="Products" class="form">
+
+                            <select class="select-md input-border w-100" name="colorId" id="colorId" asp-items="ViewBag.lsColor">
+                            </select>
+                        </form>
+                    </div>
+                </div>
+
+                <hr class="mt-0 mb-30">
+
+                <!-- ADD TO CART -->
+                <div class="row mb-30">
+                    <form method="post" action="#" class="form">
+                        <div class="col-xs-4 col-sm-2 col-md-2 ">
+                            <input type="number" id="quantity_value" class="input-border" min="1" max="@Model.UnitsInStock" value="1">
+                        </div>
+                        <div class="col-xs-8 col-sm-10 col-md-6">
+                            <div class="post-prev-more-cont clearfix">
+                                <div class="shop-add-btn-cont">
+                                    <a class="button medium gray shop-add-btn btnAddToCart" data-id="@Model.ProductId">ADD TO CART</a>
+                                </div>
+                                <div class="shop-sub-btn-cont">
+                                    <a href="#" class="post-prev-count"><span aria-hidden="true" class="icon_heart_alt"></span></a>
+                                    <a href="#" class="post-prev-count dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <span aria-hidden="true" class="social_share"></span>
+                                    </a>
+                                    <ul class="social-menu dropdown-menu dropdown-menu-right" role="menu">
+                                        <li>
+                                            <a href="#"><span aria-hidden="true" class="social_facebook"></span></a>
+                                        </li>
+                                        <li><a href="#"><span aria-hidden="true" class="social_twitter"></span></a></li>
+                                        <li><a href="#"><span aria-hidden="true" class="social_dribbble"></span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <hr class="mt-0 mb-30">
+
+                <div class="font-12 lh-20 mb-30">
+                    <div>Mã: @Model.CatId</div>
+                    <div>Phân loại: <a class="a-dark" href="/danhmuc/@Model.Cat.Alias-@Model.Cat.CatId">@Model.Cat.CatName</a></div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container mb-100">
+        <div>
+
+            <div class="tabs-3">
+                <ul class="nav nav-tabs xs-tabs-transform bootstrap-tabs">
+                    <li class="active">
+                        <a href="#one" data-toggle="tab">Mô tả</a>
+                    </li>
+                    <li>
+                        <a href="#two" data-toggle="tab">Thông số</a>
+                    </li>
+
+                </ul>
+                <!-- END nav tabs -->
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="one">
+                        <p>@Html.Raw(Model.Description)</p>
+                    </div>
+                    <div class="tab-pane fade" id="two">
+
+                        <table class="table table-striped table-bordered mt-30">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Weight</th>
+                                    <td>0.15 kg</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Size</th>
+                                    <td>XXL, XL, L, M, S</td>
+                                <tr>
+                                </tr>
+                                <tr>
+
+                                    <th scope="row">Colors</th>
+                                    <td>Blue, Black, White</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">Fabric</th>
+                                    <td>Cotton, Silk & Synthetic</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Warranty</th>
+                                    <td>3 Months</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+                <!-- END tab panes -->
+            </div>
+            <!-- END tabs  -->
+
+        </div>
+    </div>
+
+    <hr class="mt-0 mb-80">
+
+    <!-- RELATED PRODUCTS -->
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                <h4 class="blog-page-title mt-0 mb-40">Sản phẩm liên quan</h4>
+            </div>
+
+            <div class="owl-3items-nav owl-carousel owl-arrows-bg">
+                @foreach (var item in ViewBag.SanPham)
+                {
+                    string url = $"/{item.Alias}-{item.ProductId}.html";
+                    <div class="item mb-0 text-center">
+
+                        <!-- SHOP Item 1 -->
+                        <div>
+
+                            <div class="post-prev-img">
+                                <a href="@url"><img src="@item.Image" alt="img"></a>
+                            </div>
+
+                            <div class="post-prev-title mb-5">
+                                <h3><a class="font-norm a-inv" href="@url">@item.ProductName</a></h3>
+                            </div>
+
+                            <div class="shop-price-cont">
+                                <strong>@item.SalePrice.ToString("#,##0")&#8363</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- SHOP INFO 1 -->
+<div class="shop-info grey-dark-bg font-white pt-110-b-80-cont">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 text-center"><span class="icon icon-basic-globe"></span><h6 class="white-text ">Free Shipping</h6></div>
+            <div class="col-md-3 col-sm-6 text-center"><span class="icon icon-basic-life-buoy"></span><h6 class="white-text ">24/7 Customer Service</h6></div>
+            <div class="col-md-3 col-sm-6 text-center"><span class="icon icon-ecommerce-creditcard"></span><h6 class="white-text ">Payment Options</h6></div>
+            <div class="col-md-3 col-sm-6 text-center"><span class="icon icon-basic-clockwise"></span><h6 class="white-text ">30 Days Returns</h6></div>
+        </div>
+    </div>
+</div>
+

@@ -121,6 +121,11 @@ namespace SE104.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                tbProduct.Alias = Utilities.SEOUrl(tbProduct.ProductName);
+                tbProduct.CreatedDate = DateTime.Now;
+                _context.Add(tbProduct);
+                await _context.SaveChangesAsync();
+
                 if (Size != null)
                 {
                     foreach (var size in Size)
@@ -180,9 +185,7 @@ namespace SE104.Areas.Admin.Controllers
                     }
                 }
 
-                tbProduct.Alias = Utilities.SEOUrl(tbProduct.ProductName);
-                tbProduct.CreatedDate = DateTime.Now;
-                _context.Add(tbProduct);
+                
                 if (tbProduct.Price.HasValue && tbProduct.Discount.HasValue)
                 {
                     tbProduct.SalePrice = Convert.ToInt32(tbProduct.Price.Value - (tbProduct.Price.Value * tbProduct.Discount.Value / 100));
